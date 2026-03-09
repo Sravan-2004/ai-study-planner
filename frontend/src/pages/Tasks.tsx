@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '../store/authStore';
-import axios from 'axios';
+import api from '../services/api';
 import toast from 'react-hot-toast';
 
 interface Task {
@@ -23,7 +23,7 @@ const Tasks: React.FC = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get(`/api/tasks/${user?.id}`);
+      const response = await api.get(`/tasks/${user?.id}`);
       setTasks(response.data);
     } catch (error) {
       console.error('Error fetching tasks:', error);
@@ -33,7 +33,7 @@ const Tasks: React.FC = () => {
   const addTask = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/tasks', {
+      const response = await api.post('/tasks', {
         userId: user?.id,
         ...newTask,
       });
@@ -47,7 +47,7 @@ const Tasks: React.FC = () => {
 
   const updateTaskStatus = async (taskId: string, status: string) => {
     try {
-      const response = await axios.put(`/api/tasks/${taskId}`, { status });
+      const response = await api.put(`/tasks/${taskId}`, { status });
       setTasks(tasks.map((t) => (t._id === taskId ? response.data : t)));
       toast.success('Task updated!');
     } catch (error) {

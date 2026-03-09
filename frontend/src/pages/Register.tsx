@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
-import axios from 'axios';
+import api from '../services/api';  // Changed from axios to api
 import toast from 'react-hot-toast';
 
 const Register: React.FC = () => {
@@ -17,7 +17,8 @@ const Register: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('/api/auth/register', { name, email, password });
+      // Changed axios.post to api.post and removed /api from path
+      const response = await api.post('/auth/register', { name, email, password });
       const { token, user } = response.data;
 
       login(user, token);

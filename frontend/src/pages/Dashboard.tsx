@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '../store/authStore';
-import axios from 'axios';
+import api from '../services/api';
 
 interface DashboardStats {
   tasksToday: number;
@@ -22,7 +22,7 @@ const Dashboard: React.FC = () => {
     // Fetch dashboard stats
     const fetchStats = async () => {
       try {
-        const response = await axios.get(`/api/progress/${user?.id}`);
+        const response = await api.get(`/progress/${user?.id}`);
         setStats({
           tasksToday: response.data[0]?.tasksCompleted || 0,
           hoursStudied: response.data[0]?.totalStudyHours || 0,

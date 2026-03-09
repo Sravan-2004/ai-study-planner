@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuthStore } from '../store/authStore';
-import axios from 'axios';
+import api from '../services/api';
 import toast from 'react-hot-toast';
 
 const Quiz: React.FC = () => {
@@ -16,7 +16,7 @@ const Quiz: React.FC = () => {
     setLoading(true);
     try {
       // Generate quiz questions using AI
-      const quizData = await axios.post('/api/quiz', {
+      const quizData = await api.post('/quiz', {
         userId: user?.id,
         subject,
         title: `${subject} Quiz`,
@@ -48,7 +48,7 @@ const Quiz: React.FC = () => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`/api/quiz/${questions[0]?._id}/submit`, {
+      const response = await api.post(`/quiz/${questions[0]?._id}/submit`, {
         userAnswers,
       });
       toast.success(`Quiz completed! Score: ${response.data.percentage.toFixed(1)}%`);

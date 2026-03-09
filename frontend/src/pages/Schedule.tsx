@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '../store/authStore';
-import axios from 'axios';
+import api from '../services/api';
 
 interface ScheduleItem {
   _id: string;
@@ -23,7 +23,7 @@ const Schedule: React.FC = () => {
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
-        const response = await axios.get(`/api/schedule/${user?.id}`);
+        const response = await api.get(`/schedule/${user?.id}`);
         setSchedules(response.data);
       } catch (error) {
         console.error('Error fetching schedules:', error);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '../store/authStore';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import axios from 'axios';
+import api from '../services/api';
 
 interface ProgressData {
   subject: string;
@@ -17,7 +17,7 @@ const Progress: React.FC = () => {
   useEffect(() => {
     const fetchProgress = async () => {
       try {
-        const response = await axios.get(`/api/progress/${user?.id}`);
+        const response = await api.get(`/progress/${user?.id}`);
         setProgressData(response.data);
       } catch (error) {
         console.error('Error fetching progress:', error);

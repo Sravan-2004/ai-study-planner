@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '../store/authStore';
-import axios from 'axios';
+import api from '../services/api';
 import toast from 'react-hot-toast';
 
 interface Message {
@@ -21,7 +21,7 @@ const Chat: React.FC = () => {
     // Fetch chat history
     const fetchMessages = async () => {
       try {
-        const response = await axios.get(`/api/chat/${user?.id}`);
+        const response = await api.get(`/chat/${user?.id}`);
         setMessages(response.data);
       } catch (error) {
         console.error('Error fetching messages:', error);
@@ -36,7 +36,7 @@ const Chat: React.FC = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post('/api/chat/message', {
+      const response = await api.post('/chat/message', {
         userId: user?.id,
         message: input,
         subject,
