@@ -4,7 +4,7 @@ export const isValidEmail = (email: string): boolean => {
 };
 
 export const isValidPassword = (password: string): boolean => {
-  return password && password.length >= 6;
+  return !!password && password.length >= 6;
 };
 
 export const isValidObjectId = (id: string): boolean => {
